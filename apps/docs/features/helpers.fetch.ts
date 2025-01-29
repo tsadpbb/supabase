@@ -25,4 +25,17 @@ const fetchRevalidatePerDay_TEMP_TESTING = fetchWithNextOptions({
 // Temporarily disabling revalidation as a hotfix for Vercel NFT problem
 const fetchRevalidatePerDay = fetch
 
-export { fetchWithNextOptions, fetchRevalidatePerDay, fetchRevalidatePerDay_TEMP_TESTING }
+const fetchWithTags = (tags: string[]) =>
+  fetchWithNextOptions({
+    next: {
+      revalidate: false,
+      tags,
+    },
+  })
+
+export {
+  fetchWithNextOptions,
+  fetchRevalidatePerDay,
+  fetchRevalidatePerDay_TEMP_TESTING,
+  fetchWithTags,
+}

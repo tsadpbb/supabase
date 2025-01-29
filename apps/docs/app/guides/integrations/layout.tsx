@@ -3,6 +3,7 @@ import { unstable_cache } from 'next/cache'
 
 import { type NavMenuSection } from '~/components/Navigation/Navigation.types'
 import Layout from '~/layouts/guides'
+import { REVALIDATION_TAGS } from '~/lib/constants'
 import { supabaseMisc } from '~/lib/supabaseMisc'
 
 export default async function IntegrationsLayout({ children }: { children: React.ReactNode }) {
@@ -11,9 +12,10 @@ export default async function IntegrationsLayout({ children }: { children: React
   return <Layout additionalNavItems={additionalNavItems}>{children}</Layout>
 }
 
-// Will need to turn on revalidation later, just turning it off for now so we
-// can slowly turn things back on while monitoring usage
-const getPartners = unstable_cache(getPartnersImpl, [], { revalidate: false })
+const getPartners = unstable_cache(getPartnersImpl, [], {
+  revalidate: false,
+  tags: [REVALIDATION_TAGS.PARTNERS],
+})
 async function getPartnersImpl() {
   if (!IS_PLATFORM) return []
 
