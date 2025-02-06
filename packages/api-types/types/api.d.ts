@@ -8853,6 +8853,40 @@ export interface components {
       publish_update?: boolean
       tables?: string[] | null
     }
+    CreateReplicationPipelineBody: {
+      /** @description Pipeline config */
+      config: {
+        config: {
+          max_fill_secs: number
+          max_size: number
+        }
+      }
+      /** @description Publication name */
+      publication_name: string
+      /** @description Sink id */
+      sink_id: number
+      /** @description Source id */
+      source_id: number
+    }
+    CreateReplicationPublicationBody: {
+      /** @description Publication name */
+      name: string
+      /** @description Publication tables */
+      tables: {
+        name: string
+        schema: string
+      }[]
+    }
+    CreateReplicationSinkBody: {
+      /** @description BigQuery dataset id */
+      dataset_id: string
+      /** @description BigQuery project id */
+      project_id: string
+      /** @description BigQuery service account key */
+      service_account_key: string
+      /** @description Sink name */
+      sink_name: string
+    }
     CreateSchemaBody: {
       name: string
       owner: string
@@ -10664,7 +10698,7 @@ export interface components {
     }
     ProjectAvailableRestoreVersion: {
       /** @enum {string} */
-      postgres_engine: '13' | '14' | '15' | '17-oriole'
+      postgres_engine: '13' | '14' | '15' | '17' | '17-oriole'
       /** @enum {string} */
       release_channel: 'internal' | 'alpha' | 'beta' | 'ga' | 'withdrawn' | 'preview'
       version: string
@@ -10887,7 +10921,7 @@ export interface components {
     }
     ProjectUnpauseVersionInfo: {
       /** @enum {string} */
-      postgres_engine: '13' | '14' | '15' | '17-oriole'
+      postgres_engine: '13' | '14' | '15' | '17' | '17-oriole'
       /** @enum {string} */
       release_channel: 'internal' | 'alpha' | 'beta' | 'ga' | 'withdrawn' | 'preview'
       version: string
@@ -21925,7 +21959,9 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        ref: string
+      }
       cookie?: never
     }
     requestBody?: never
@@ -21957,10 +21993,16 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        ref: string
+      }
       cookie?: never
     }
-    requestBody?: never
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateReplicationPipelineBody']
+      }
+    }
     responses: {
       201: {
         headers: {
@@ -21987,7 +22029,10 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        pipeline_id: number
+        ref: string
+      }
       cookie?: never
     }
     requestBody?: never
@@ -22017,7 +22062,10 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        pipeline_id: number
+        ref: string
+      }
       cookie?: never
     }
     requestBody?: never
@@ -22047,7 +22095,10 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        pipeline_id: number
+        ref: string
+      }
       cookie?: never
     }
     requestBody?: never
@@ -22079,7 +22130,10 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        pipeline_id: number
+        ref: string
+      }
       cookie?: never
     }
     requestBody?: never
@@ -22109,7 +22163,9 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        ref: string
+      }
       cookie?: never
     }
     requestBody?: never
@@ -22141,10 +22197,16 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        ref: string
+      }
       cookie?: never
     }
-    requestBody?: never
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateReplicationSinkBody']
+      }
+    }
     responses: {
       201: {
         headers: {
@@ -22171,7 +22233,10 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        ref: string
+        sink_id: number
+      }
       cookie?: never
     }
     requestBody?: never
@@ -22201,7 +22266,9 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        ref: string
+      }
       cookie?: never
     }
     requestBody?: never
@@ -22234,7 +22301,9 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        ref: string
+      }
       cookie?: never
     }
     requestBody?: never
@@ -22267,7 +22336,10 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        ref: string
+        source_id: number
+      }
       cookie?: never
     }
     requestBody?: never
@@ -22300,10 +22372,17 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        ref: string
+        source_id: number
+      }
       cookie?: never
     }
-    requestBody?: never
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateReplicationPublicationBody']
+      }
+    }
     responses: {
       /** @description Returned when the publication is created. */
       200: {
@@ -22337,7 +22416,11 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        publication_name: string
+        ref: string
+        source_id: number
+      }
       cookie?: never
     }
     requestBody?: never
@@ -22368,7 +22451,10 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        ref: string
+        source_id: number
+      }
       cookie?: never
     }
     requestBody?: never
