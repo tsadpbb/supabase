@@ -9,7 +9,7 @@ You are charged for the number of distinct images transformed during the billing
 ### Example
 With these four transformations applied to `image-1.jpg` and `image-2.jpg`, the origin images count is 2.
 
-```javascript JavaScript
+```javascript
 supabase.storage.from('bucket').createSignedUrl('image-1.jpg', 60000, {
   transform: {
     width: 200,
@@ -18,7 +18,7 @@ supabase.storage.from('bucket').createSignedUrl('image-1.jpg', 60000, {
 })
 ```
 
-```javascript JavaScript
+```javascript
 supabase.storage.from('bucket').createSignedUrl('image-2.jpg', 60000, {
   transform: {
     width: 400,
@@ -27,7 +27,7 @@ supabase.storage.from('bucket').createSignedUrl('image-2.jpg', 60000, {
 })
 ```
 
-```javascript JavaScript
+```javascript
 supabase.storage.from('bucket').createSignedUrl('image-2.jpg', 60000, {
   transform: {
     width: 600,
@@ -36,7 +36,7 @@ supabase.storage.from('bucket').createSignedUrl('image-2.jpg', 60000, {
 })
 ```
 
-```javascript JavaScript
+```javascript
 supabase.storage.from('bucket').download('image-2.jpg', {
   transform: {
     width: 800,
@@ -118,3 +118,9 @@ In the Storage Image Transformations section, you can see how many origin images
   }}
   zoomable
 />
+
+## Optimize usage
+- Pre-generate common variants – instead of transforming images on the fly, generate and store commonly used sizes in advance
+- Optimize original image sizes – upload images in an optimized format and resolution to reduce the need for excessive transformations
+- Leverage [Smart CDN](/docs/guides/storage/cdn/smart-cdn) caching or any other caching solution to serve transformed images efficiently and avoid unnecessary repeated transformations
+- Control how long assets are stored in the browser using the `Cache-Control` header
