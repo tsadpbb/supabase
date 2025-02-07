@@ -1,15 +1,23 @@
 import { PermissionAction } from '@supabase/shared-types/out/constants'
 import { toast } from 'sonner'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@ui/components/shadcn/ui/form'
 import { useParams } from 'common'
 import {
   ScaffoldSection,
   ScaffoldSectionContent,
   ScaffoldSectionDetail,
 } from 'components/layouts/Scaffold'
+import { FormActions } from 'components/ui/Forms/FormActions'
+import { FormPanel } from 'components/ui/Forms/FormPanel'
+import { FormSection, FormSectionContent } from 'components/ui/Forms/FormSection'
+import { useOrganizationCustomerProfileQuery } from 'data/organizations/organization-customer-profile-query'
 import { useOrganizationUpdateMutation } from 'data/organizations/organization-update-mutation'
 import { useCheckPermissions } from 'hooks/misc/useCheckPermissions'
 import { useSelectedOrganization } from 'hooks/misc/useSelectedOrganization'
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
 import { FormMessage_Shadcn_, Input_Shadcn_ } from 'ui'
 import {
   MultiSelector,
@@ -17,15 +25,7 @@ import {
   MultiSelectorList,
   MultiSelectorTrigger,
 } from 'ui-patterns/multi-select'
-import { useOrganizationCustomerProfileQuery } from 'data/organizations/organization-customer-profile-query'
 import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@ui/components/shadcn/ui/form'
-import { FormPanel } from 'components/ui/Forms/FormPanel'
-import { FormSection, FormSectionContent } from 'components/ui/Forms/FormSection'
-import { FormActions } from 'components/ui/Forms/FormActions'
-import { useEffect } from 'react'
 
 const formSchema = z.object({
   billingEmail: z.string().email().optional(),
@@ -155,19 +155,16 @@ const BillingEmail = () => {
                       <FormItem>
                         <FormLabel>Additional emails</FormLabel>
                         <FormControl>
-                          <MultiSelector
-                            values={form.getValues('additionalBillingEmails')}
-                            onValuesChange={(v) => form.setValue('additionalBillingEmails', v)}
-                          >
+                          <MultiSelector values={field.value} onValuesChange={field.onChange}>
                             <MultiSelectorTrigger
-                              label="Add additional recipients"
                               deletableBadge
-                              badgeLimit="wrap"
                               showIcon={false}
                               mode="inline-combobox"
+                              label="Add additional recipients"
+                              badgeLimit="wrap"
                             />
                             <MultiSelectorContent>
-                              <MultiSelectorList creatable></MultiSelectorList>
+                              <MultiSelectorList creatable />
                             </MultiSelectorContent>
                           </MultiSelector>
                         </FormControl>
